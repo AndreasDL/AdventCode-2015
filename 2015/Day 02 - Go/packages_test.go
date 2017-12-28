@@ -24,20 +24,22 @@ func TestSurface(t *testing.T){
 		}
 	}
 }
-/*
+
 var testsP2 = []struct{
 	input string
 	output int
 }{
-	{")"    , 1 },
-	{"()())", 5 },
+	{"2x3x4"   , 34 },
+	{"1x1x10"  , 14 },
+	{"4x2x3"   , 34 },
+	{"1x10x1"  , 14 },
 }
 
-func TestPart2(t *testing.T){
+func TestRibbon(t *testing.T){
 
 	for _, test := range testsP2{
 
-		actual := Part2(test.input)
+		actual := Ribbon(test.input)
 		if actual != test.output {
 			t.Fatalf("Mistakes were made.. %q returned %d expecting %d.", 
 				test.input, 
@@ -47,4 +49,3 @@ func TestPart2(t *testing.T){
 		}
 	}
 }
-*/
