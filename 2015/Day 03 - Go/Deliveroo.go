@@ -18,6 +18,8 @@ func main() {
 	input := readInput("input.txt")
 
 	fmt.Println(Visited(input))
+	fmt.Println(Visited2(input))
+
 }
 
 
@@ -40,6 +42,25 @@ func Visited(s string) int {
 	return len(beenThere)
 }
 
+func Visited2(s string) int {
+	beenThere := map[string]bool{"0;0": true}
+		
+	index := 0
+	x, y := []int{0,0}, []int{0,0}
+	for _, c := range []byte(s){
+		delta := deltas[c]
+
+		x[index] += delta.dx
+		y[index] += delta.dy
+
+		key := fmt.Sprintf("%d;%d",x[index],y[index])
+		beenThere[key] = true
+
+		index = (index+1)%2
+	}
+
+	return len(beenThere)
+}
 
 func readInput(fname string) string{
 	res, _ := ioutil.ReadFile(fname)

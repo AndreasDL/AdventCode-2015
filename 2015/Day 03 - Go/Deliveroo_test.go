@@ -26,22 +26,21 @@ func TestVisited(t *testing.T){
 		}
 	}
 }
-/*
+
 var testsP2 = []struct{
 	input string
 	output int
 }{
-	{"2x3x4"   , 34 },
-	{"1x1x10"  , 14 },
-	{"4x2x3"   , 34 },
-	{"1x10x1"  , 14 },
+	{"^v", 3 },
+	{"^>v<", 3},
+	{"^v^v^v^v^v", 11},
 }
 
-func TestRibbon(t *testing.T){
+func TestVisited2(t *testing.T){
 
 	for _, test := range testsP2{
 
-		actual := Ribbon(test.input)
+		actual := Visited2(test.input)
 		if actual != test.output {
 			t.Fatalf("Mistakes were made.. %q returned %d expecting %d.", 
 				test.input, 
@@ -51,4 +50,3 @@ func TestRibbon(t *testing.T){
 		}
 	}
 }
-*/
