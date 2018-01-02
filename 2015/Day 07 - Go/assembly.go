@@ -41,18 +41,9 @@ func (c Command) String() string{
 
 
 func main() {
-
-	part1()
-
-}
-
-func part1(){
 	commands := parseFile( readInput("input.txt") )
-	//fmt.Println(len(commands))
-
-	//panic(nil)
-	i := 0
-	for len(commands) > 1 {
+	
+	for i:= 0 ; len(commands) > 1 ; {
 		if commands[i].Execute() { //execution sucess full => remove instruction
 			commands = append(commands[:i], commands[i+1:]...)
 			//fmt.Println(i, " => ", len(commands))
@@ -63,7 +54,30 @@ func part1(){
 	//last one!
 	commands[0].Execute()
 
-	fmt.Println("part 1: ", memory["a"])	
+	fmt.Println("part 1: ", memory["a"])
+	//part1()
+
+	val := memory["a"]
+	memory = map[string]uint16{ "b" : val } //reset
+	commands = parseFile( readInput("input.txt") )
+	
+	for i:= 0 ; len(commands) > 1 ; {
+		if commands[i].Execute() { //execution sucess full => remove instruction
+			memory["b"] = val //avoid any overrides !
+			commands = append(commands[:i], commands[i+1:]...)
+			//fmt.Println(i, " => ", len(commands))
+		}
+		i = (i+1) % len(commands)
+	}
+
+	//last one!
+	commands[0].Execute()
+
+	fmt.Println("part 2: ", memory["a"])
+	fmt.Println(memory["b"]) //check
+
+	//3176 too low
+
 }
 
 func readInput(fname string) string{
