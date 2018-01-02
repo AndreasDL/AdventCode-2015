@@ -12,13 +12,16 @@ func main() {
 	input := readInput("input.txt")//*/"sampleInput.txt")
 
 
-	cLength, sLength := 0, 0
+	cLength, sLength, sLength2 := 0, 0, 0
 	for _, line := range strings.Split(input, "\n"){
-		cLength += len(line)
-		sLength += strLength(line)
+		cLength  += len(line)
+		sLength  += strLength(line)
+		sLength2 += strLength2(line)
+
+		fmt.Println(strLength2(line))
 	}
 
-	fmt.Println(cLength, sLength, cLength - sLength)
+	fmt.Println(cLength, sLength, " => ", cLength - sLength,  " | ", sLength2, " => ", sLength2 - cLength)
 }
 
 
@@ -42,4 +45,20 @@ func strLength(s string) int {
 		}
 	}
 	return ctr
+}
+
+func strLength2(s string) int {
+	ctr := 0
+	for i := 0 ; i < len(s) ; i++ {
+
+		ctr++
+
+		if s[i] == '"' { 
+			ctr++ 
+		} else if s[i] == '\\'{
+			ctr++
+		} 
+
+	}
+	return ctr +2 
 }
