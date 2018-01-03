@@ -5,7 +5,7 @@ import (
 	"strings"
 	"strconv"
 	"fmt"
-	pq "github.com/Workiva/go-datastructures/queue" //modified
+	pq "github.com/Workiva/go-datastructures/queue" //modified to use item.String() => hashable maps
 )
 
 func main() {
@@ -14,6 +14,9 @@ func main() {
 
 	shortest := chart.findShortest()
 	fmt.Println(shortest.path, shortest.length)
+
+	longest := chart.findLongest()
+	fmt.Println(longest.path, longest.length)
 }
 
 type Chart struct {
@@ -42,7 +45,7 @@ func newChart(input string) *Chart{
 	}
 }
 func (c Chart) findShortest() Path {
-	//Assumption: solution doesn't contain loops
+	//Assumption: solution doesn't contain loops => requirement for part 2
 
 	//init states
 	todos := pq.NewPriorityQueue(50, false)
@@ -74,6 +77,42 @@ func (c Chart) findShortest() Path {
 
 	return Path{}
 }
+func (c Chart) findLongest() Path {
+	//Requirement: solution doesn't contain loops
+	//koop looping over all paths!
+
+	//init states
+	todos := pq.NewPriorityQueue(50, false)
+	for k, _ := range c.cities{
+		todos.Put(Path{
+			visited: map[string]bool{k: true},
+			length : 0,
+			path   : []string{k},
+		})
+	}
+	fmt.Println(todos)
+
+	//search
+	var max Path
+	for !todos.Empty() {
+
+		item, err := todos.Get(1)
+		if err != nil { panic(nil) }
+		curr, ok := item[0].(Path)
+		if !ok { 
+			panic("we should be able to cast to Path") 
+		} else if c.IsFinal(curr) && curr.length > max.length{
+			max = curr
+		}
+
+		for _, p := range *(c.NextPaths(curr)) {
+			todos.Put(p)
+		}
+	}
+
+	return max
+}
+
 func (c Chart) IsFinal(p Path) bool {
 	//final when we have visited all cities
 	return len(p.visited) == len(c.cities)
