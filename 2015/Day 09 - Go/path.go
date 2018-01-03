@@ -5,7 +5,7 @@ import (
 	"strings"
 	"strconv"
 	"fmt"
-	pq "github.com/Workiva/go-datastructures/queue" //modified to use item.String() => hashable maps
+	//pq "github.com/Workiva/go-datastructures/queue" //modified to use item.String() => hashable maps
 )
 
 func main() {
@@ -48,7 +48,7 @@ func (c Chart) findShortest() Path {
 	//Assumption: solution doesn't contain loops => requirement for part 2
 
 	//init states
-	todos := pq.NewPriorityQueue(50, false)
+	todos := NewPriorityQueue(50, false)
 	for k, _ := range c.cities{
 		todos.Put(Path{
 			visited: map[string]bool{k: true},
@@ -82,7 +82,7 @@ func (c Chart) findLongest() Path {
 	//koop looping over all paths!
 
 	//init states
-	todos := pq.NewPriorityQueue(50, false)
+	todos := NewPriorityQueue(50, false)
 	for k, _ := range c.cities{
 		todos.Put(Path{
 			visited: map[string]bool{k: true},
@@ -147,7 +147,7 @@ type Path struct{
 	length int
 	path []string
 }
-func (p Path) Compare(pp pq.Item)int {
+func (p Path) Compare(pp Item)int {
 
 	pother, ok := pp.(Path)
 	if !ok { return 0 }
