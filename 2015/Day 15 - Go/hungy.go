@@ -51,12 +51,12 @@ func main() {
 
 	ingredients := parseInput(input)
 
-	fmt.Println( OptimalBalance(ingredients) )
+	fmt.Println("part1: ", OptimalBalance1(ingredients) )
+	fmt.Println("part2: ", OptimalBalance2(ingredients) )
 
 }
 
-
-func OptimalBalance(ingredients []Ingredient) int{
+func OptimalBalance1(ingredients []Ingredient) int{
 
 	maxScore := 0
 	for a := 0 ; a < 100 ; a++ {
@@ -65,6 +65,56 @@ func OptimalBalance(ingredients []Ingredient) int{
 
 				if a+b+c > 100 { continue }
 				d := 100 -a-b-c
+
+				cap := a * ingredients[0].capacity
+				cap += b * ingredients[1].capacity
+				cap += c * ingredients[2].capacity
+				cap += d * ingredients[3].capacity
+				if cap <= 0 { continue }
+
+				dur := a * ingredients[0].duratbility
+				dur += b * ingredients[1].duratbility
+				dur += c * ingredients[2].duratbility
+				dur += d * ingredients[3].duratbility
+				if dur <= 0 { continue }
+
+				fla := a * ingredients[0].flavor
+				fla += b * ingredients[1].flavor
+				fla += c * ingredients[2].flavor
+				fla += d * ingredients[3].flavor
+				if fla <= 0 { continue }
+
+				tex := a * ingredients[0].texture
+				tex += b * ingredients[1].texture
+				tex += c * ingredients[2].texture
+				tex += d * ingredients[3].texture
+				if tex <= 0 { continue }
+
+				score := cap * dur * fla * tex
+
+				if score > maxScore { maxScore = score }
+			}
+		}
+	}
+
+	return maxScore	
+}
+
+func OptimalBalance2(ingredients []Ingredient) int{
+
+	maxScore := 0
+	for a := 0 ; a < 100 ; a++ {
+		for b := 0 ; b < 100 ; b++ {
+			for c := 0 ; c < 100 ; c++ {
+
+				if a+b+c > 100 { continue }
+				d := 100 -a-b-c
+
+				cal := a * ingredients[0].calories
+				cal += b * ingredients[1].calories
+				cal += c * ingredients[2].calories
+				cal += d * ingredients[3].calories
+				if cal != 500 { continue }
 
 				cap := a * ingredients[0].capacity
 				cap += b * ingredients[1].capacity
